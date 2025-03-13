@@ -1,0 +1,7 @@
+[bot]
+# 账号 必填
+account = 114514
+# 密码 选填
+password = "pwd"
+# SignServer 必填
+signServer = "https://sign.lagrangecore.org/api/sign/30366"
