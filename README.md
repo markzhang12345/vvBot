@@ -1,7 +1,6 @@
 # vvBot
 
 > [!WARNING]
-
 > 本项目仅供学习交流使用，请勿用作不良用途
 
 一个基于 LagrangeGo-Template 的 qq 机器人，直接修改自 [LagrangeGo-Template](https://github.com/ExquisiteCore/LagrangeGo-Template) 项目
@@ -49,9 +48,10 @@ password = "pwd"
 
 ## 欢迎对本项目进行贡献
 
-- 实现更加清晰的时间监听逻辑
+- 实现更加清晰的事件监听逻辑
 - 实现模糊语义搜索
 - 增加 vv428 武器库
+- 增加防大手 👊🐔 逻辑
 
 ## 引入的第三方 go module
 
