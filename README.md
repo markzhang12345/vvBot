@@ -49,6 +49,10 @@ password = "pwd"
 
 ## 欢迎对本项目进行贡献
 
+- 实现更加清晰的时间监听逻辑
+- 实现模糊语义搜索
+- 增加 vv428 武器库
+
 ## 引入的第三方 go module
 
 - [LagrangeGo](https://github.com/LagrangeDev/LagrangeGo)
