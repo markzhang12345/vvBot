@@ -37,6 +37,14 @@ password = "pwd"
 
 ## 快速入门
 
+### 快速部署
+
+下载 release 中的压缩包，在您的 linux 环境中合适的位置解压，填写好 toml 文件后，运行可执行文件即可
+
+若想长期部署，建议使用`nohup`命令后台运行，可以使用`nohup ./vvBot > app.log 2>&1 &`命令，将日志重定向到 app.log 文件
+
+或者使用`screen`命令
+
 ### 二次开发
 
 > [!NOTE]
