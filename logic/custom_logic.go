@@ -2,11 +2,11 @@ package logic
 
 import (
 	"encoding/json"
-	"strings"
-	"os"
 	"math/rand"
+	"os"
+	"strings"
 	"time"
-	
+
 	"github.com/LagrangeDev/LagrangeGo/client"
 	"github.com/LagrangeDev/LagrangeGo/client/event"
 	"github.com/LagrangeDev/LagrangeGo/message"
@@ -24,12 +24,12 @@ func RegisterCustomLogic() {
 		rand.Seed(time.Now().UnixNano())
 
 		const jsonFilePath = "./logic/filename.json"
-		// 提前加载文件目录
+
 		jsonData, err := os.ReadFile(jsonFilePath)
 		if err != nil {
 			reply := []message.IMessageElement{
 				message.NewText("读取文件目录出错"),
-        	}
+			}
 			client.SendGroupMessage(event.GroupUin, reply)
 		}
 
@@ -37,42 +37,54 @@ func RegisterCustomLogic() {
 		if err := json.Unmarshal(jsonData, &filenames); err != nil {
 			reply := []message.IMessageElement{
 				message.NewText("解析文件目录出错"),
-        	}
+			}
 			client.SendGroupMessage(event.GroupUin, reply)
 		}
+
+		matcher := NewAIImageMatcher(filenames)
 
 		// 添加1~2秒的随机延时, 求生欲
 		randomDelay := 1000 + rand.Intn(1001)
 		time.Sleep(time.Duration(randomDelay) * time.Millisecond)
 
-		// 提取文本消息
 		var msgText string
-    	for _, elem := range event.Elements {
-        	if textElem, ok := elem.(*message.TextElement); ok {
-            	msgText += textElem.Content
-        	}
+		for _, elem := range event.Elements {
+			if textElem, ok := elem.(*message.TextElement); ok {
+				msgText += textElem.Content
+			}
 
 			if strings.HasPrefix(msgText, "vv ") {
 				args := strings.TrimPrefix(msgText, "vv ")
 
-				// 关键词模糊搜索逻辑
-				filepath := searchImageByKeyword(args, filenames)
+				var filepath string
 
-				// 读取本地图片
+				if matcher.IsAISearch {
+					filepath = matcher.MatchImageByKeyword(args)
+				} else {
+					filepath = searchImageByKeyword(args, matcher.Filenames)
+				}
+
 				imageData, _ := os.ReadFile(filepath)
 
 				imgElement := message.NewImage(imageData)
-				
+
 				reply := []message.IMessageElement{
 					imgElement,
-        		}
-        		client.SendGroupMessage(event.GroupUin, reply)
-    		}
-
-			if strings.HasPrefix(msgText, "求生欲"){
-				client.SendPrivateMessage(event.GroupUin, []message.IMessageElement{message.NewText("我不是 bot !")})
+				}
+				client.SendGroupMessage(event.GroupUin, reply)
 			}
-    	}
+
+			if strings.HasPrefix(msgText, "vvv ") {
+				args := strings.TrimPrefix(msgText, "vvv ")
+
+				reply, err := matcher.Chat(args)
+
+				if err != nil {
+					reply = err.Error()
+				}
+				client.SendGroupMessage(event.GroupUin, []message.IMessageElement{message.NewText(reply)})
+			}
+		}
 	})
 
 	Manager.RegisterNewFriendRequestHandler(func(client *client.QQClient, event *event.NewFriendRequest) {
@@ -81,5 +93,3 @@ func RegisterCustomLogic() {
 		//client.SetFriendRequest(true, event.SourceUid)
 	})
 }
-
-

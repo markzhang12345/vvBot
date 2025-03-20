@@ -5,3 +5,13 @@ account = 114514
 password = "pwd"
 # SignServer 必填
 signServer = "https://sign.lagrangecore.org/api/sign/30366"
+
+[ai]
+# 是否开启 AI 搜索
+isAISearch = true
+# 使用的平台 url 
+url = "https://api.siliconflow.cn/v1/chat/completions"
+# 使用的模型
+model = "Qwen/Qwen2.5-7B-Instruct"
+# 使用的平台api key
+APIKey = ""

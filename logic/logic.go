@@ -1,10 +1,10 @@
 package logic
 
 import (
-	"github.com/kpmark/vvbot/bot"
 	"github.com/LagrangeDev/LagrangeGo/client"
 	"github.com/LagrangeDev/LagrangeGo/client/event"
 	"github.com/LagrangeDev/LagrangeGo/message"
+	"github.com/kpmark/vvbot/bot"
 )
 
 // 定义不同类型事件的处理函数类型

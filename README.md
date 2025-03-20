@@ -9,7 +9,7 @@
 
 ## 基础配置
 
-账号配置 [application.toml](./application.toml)
+配置 [application.toml](./application.toml)
 
 ```toml
 [bot]
@@ -18,6 +18,16 @@ account = 114514
 
 # 密码 选填
 password = "pwd"
+
+[ai]
+# 是否开启 AI 搜索
+isAISearch = true
+# 使用的平台 url
+url = "https://api.siliconflow.cn/v1/chat/completions"
+# 使用的模型
+model = "Qwen/Qwen2.5-7B-Instruct"
+# 使用的平台api key
+APIKey = ""
 ```
 
 > [!NOTE]
@@ -25,15 +35,23 @@ password = "pwd"
 
 ## 功能实现
 
+### vv 表情
+
 增加了基于 vv433 的 vv428 表情库，使用全 png 格式图片
 
 自动检测群聊中`vv <参数>`格式的消息，如`vv 测试`，并对参数进行简单的匹配
 
-若在文件目录中匹配不到相应表情包，则发送随机表情
+默认使用 AI 进行关键词匹配，如果关闭或者匹配失败则转入普通匹配
+
+普通匹配时，若在文件目录中匹配不到相应表情包，则发送随机表情
 
 若在文件目录中匹配到多个同优先级的表情包，则返回其中随机一个
 
 文件目录以`filename.json`的方式存储在`logic`文件夹下
+
+### vvv 聊天
+
+自动检测群聊中`vvv <参数>`格式的消息，如`vvv 测试`，并对参数进行~~神秘~~简单的回复
 
 ## 快速入门
 
@@ -56,8 +74,10 @@ password = "pwd"
 
 ## 欢迎对本项目进行贡献
 
+待做
+
 - 实现更加清晰的事件监听逻辑
-- 实现模糊语义搜索
+- ~~实现模糊语义搜索~~
 - 增加 vv428 武器库
 - 增加防大手 👊🐔 逻辑
 
